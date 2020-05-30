@@ -10,14 +10,15 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
     </head>
     <body>
         <?php
-            require_once('../controller/EmpresaControlador.php');
+            require_once('../controller/OrderController.php');
             require('menu/menu.php');
-            $company = new EmpresaControlador();
+            $company = new PedidoController();
             if(isset($_GET['id'])){
-              $data = $company->consultarEmpresaPorIdOnly($_GET['id']);
+              $data = $company->consultarPedido($_GET['id']);
             }
         ?>
         <div class="container">
@@ -28,180 +29,252 @@
               Registro de Órdenes
             </div>
             <div class="panel-body">
-              <form action="formCompany.php" method="post" role="form" enctype="multipart/form-data">
+              <form action="formOrder.php" method="post" role="form" enctype="multipart/form-data">
                 
-                <div class="row">
+                <div class="row">              
             
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="nit">Nro de Orden:</label>
-                        <input class="form-control" type="text" name="nit" placeholder="000000000-1" 
-                        value="<?php echo isset($data['NIT'])?$data['NIT']:''; ?>" required/>
-                        </div>
-                    </div>
-                
-            
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="name_company">Cliente:</label>
-                            <input class="form-control" type="text" name="name_company" placeholder="Nombres Completos del Cliente"
+                            <label for="nombre_cliente">Cliente:</label>
+                            <input class="form-control" type="text" name="nombre_cliente" placeholder="Nombres y Apellidos Completos del Cliente"
                             value="<?php echo isset($data['NAME_COMPANY'])?$data['NAME_COMPANY']:''; ?>" required/>
                         </div>
                     </div>
             
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="address_company">Barrio:</label>
-                            <input class="form-control" type="text" name="address_company" placeholder="Dirección de Entrega"
-                            value=""/>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="row">
-
-                  <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="address_company">Ciudad:</label>
-                            <select class="form-control">
-                              <option>La Ceja</option>
-                              <option>Rionegro</option>
-                              <option>Marnilla</option>
-                              <option>El Santuario</option>
-                              <option>El Retiro</option>
-                              <option>La Unión</option>
-                              <option>El Carmen de Viboral</option>
-                              <option>Medellín</option>
-                              <option>Bogota</option>
-                            </select>
+                            <label for="barrio">Barrio:</label>
+                            <input class="form-control" type="text" name="barrio" placeholder="Dirección de Entrega"
+                            value="<?php echo isset($data['barrio'])?$data['barrio']:''; ?>"/>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="address_company">Dirección Entrega:</label>
-                            <input class="form-control" type="text" name="address_company" placeholder="Dirección de Entrega"
-                            value=""/>
+                            <label for="ciudad">Ciudad:</label>
+                            <select class="form-control" name="ciudad">
+                              <option>Eleccione una Opción</option>
+                              <option value="1">La Ceja</option>
+                              <option value="2">Rionegro</option>
+                              <option value="3">Marnilla</option>
+                              <option value="4">El Santuario</option>
+                              <option value="5">El Retiro</option>
+                              <option value="6">La Unión</option>
+                              <option value="7">El Carmen de Viboral</option>
+                              <option value="8">Medellín</option>
+                              <option value="9">Bogota</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="direccion_entrega">Dirección Entrega:</label>
+                            <input class="form-control" type="text" name="direccion_entrega" placeholder="Dirección de Entrega"
+                            value="<?php echo isset($data['direccion_entrega'])?$data['direccion_entrega']:''; ?>" required/>
                         </div>
                     </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="phone_company">Teléfono Cliente:</label>
-                        <input class="form-control" type="tel" name="phone_company" placeholder="555 55 55"
-                        value="<?php echo isset($data['PHONE_COMPANY'])?$data['PHONE_COMPANY']:''; ?>"/>
+                        <label for="telefono_cliente">Teléfono Cliente:</label>
+                        <input class="form-control" type="tel" name="telefono_cliente" placeholder="555 55 55"
+                        value="<?php echo isset($data['telefono_cliente'])?$data['telefono_cliente']:''; ?>" required/>
                     </div>
                   </div>
-            
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="telefono_entrega">Teléfono Entrega:</label>
+                        <input class="form-control" type="tel" name="telefono_entrega" placeholder="333 33 33" 
+                        value="<?php echo isset($data['telefono_entrega'])?$data['telefono_entrega']:''; ?>"/>
+                    </div>
+                  </div>
                   
                 </div>
             
                 <div class="row">
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="cel_company">Teléfono Entrega:</label>
-                        <input class="form-control" type="tel" name="cel_company" placeholder="333 33 33" required
-                        value="<?php echo isset($data['CEL_COMPANY'])?$data['CEL_COMPANY']:''; ?>"/>
-                    </div>
-                  </div>
+                
             
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="mail_company">Mail Cliente:</label>
-                        <input class="form-control" type="email" name="mail_company" placeholder="cliente@correo.com"
-                        value="<?php echo isset($data['MAIL_COMPANY'])?$data['MAIL_COMPANY']:''; ?>" required/>
+                        <label for="mail_cliente">Mail Cliente:</label>
+                        <input class="form-control" type="email" name="mail_cliente" placeholder="cliente@correo.com"
+                        value="<?php echo isset($data['mail_cliente'])?$data['mail_cliente']:''; ?>"/>
                     </div>
                   </div>
-            
+
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="contact_company">Fecha Entrega Estimada:</label>
-                        <input class="form-control" type="date" name="contact_company" placeholder="Nombre del propietario"/>
+                        <label for="entrega_estimada">Fecha Entrega Estimada:</label>
+                        <input class="form-control" type="date" name="fecha_ entrega_estimada" placeholder="Nombre del propietario"
+                        value="<?php echo isset($data['fecha_entrega_estimada'])?$data['fcha_entrega_estimada']:''; ?>" required/>
                     </div>
                   </div>
-            
                   
-                    
-                </div>
-            
-                <div class="row">
-            
-                <div class="col-md-4">
+
+                  <div class="col-md-4">
                     <div class="form-group">
-                        <label for="logo_url">Tipo de Producto:</label>
-                        <select class="form-control">
+                        <label for="tipo_producto">Tipo de Producto:</label>
+                        <select class="form-control" name="tipo_producto">
                           <option>Ramo de Gérbera</option>
                         </select>
                         <br/>
                     </div>
                   </div>
-                  
-
+                   
+                </div>
             
+                <div class="row">
+ 
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="web_url">Cantidad por Ramos:</label>
-                        <input class="form-control" type="number" name="web_url" placeholder="0"
-                        value=""/>
+                        <label for="cantidad">Cantidad por Ramos:</label>
+                        <input class="form-control" type="number" name="cantidad" placeholder="0"
+                        value="<?php echo isset($data['cantidad'])?$data['cantidad']:''; ?>" required/>
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="fb_url">Tipo de Pago:</label>
-                        <select class="form-control">
-                          <option></option>
+                        <label for="tipo_pago">Tipo de Pago:</label>
+                        <select class="form-control" name="tipo_pago">
+                          <option>Seleccione un tipo</option>
                           <option>Contra Entrega</option>
                           <option>Consignación</option>
                           <option>Transferencia</option>
                         </select>
                     </div>
                   </div>
-            
+
+
                   <div class="col-md-4">
                     <div class="form-group">
-                        <label for="tw_url">Fecha de Pago:</label>
-                        <input class="form-control" type="date" name="tw_url" placeholder="Fecha de Pago"
-                        value=""/>
+                        <label for="numero_comprobante">Nro Comprobante:</label>
+                        <input class="form-control" type="text" name="numero_comprobante" placeholder="9836567"
+                        value="<?php echo isset($data['numero_comprobante'])?$data['numero_comprobante']:''; ?>"/>
                     </div>
                   </div>
+            
+                  
+                </div>
+
+                <div class="row">
+                
 
                   
 
+                  <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="pago" class="form-check-label">Pago:</label><br>
+                        <input class="form-check-input" type="checkbox" name="pago"
+                        value="<?php echo isset($data['pago'])?$data['pago']:''; ?>"/>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="fecha_pago" class="form-check-label">Fecha Pago:</label><br>
+                        <input class="form-control" type="date" name="fecha_pago"
+                        value="<?php echo isset($data['fecha_pago'])?$data['fecha_pago']:''; ?>"/>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="despacho" class="form-check-label">Despacho:</label><br>
+                        <input class="form-check-input" type="checkbox" name="despacho"
+                        value="<?php echo isset($data['despacho'])?$data['despacho']:''; ?>"/>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="fecha_despacho" class="form-check-label">Fecha Despacho:</label><br>
+                        <input class="form-control" type="date" name="fecha_despacho"
+                        value="<?php echo isset($data['fecha_despacho'])?$data['fecha_despacho']:''; ?>"/>
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                        <label for="entrega" class="form-check-label">Entrega:</label><br>
+                        <input class="form-check-input" type="checkbox" name="entrega"
+                        value="<?php echo isset($data['entrega'])?$data['entrega']:''; ?>"/>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="entrega" class="form-check-label">Fecha Entrega:</label><br>
+                        <input class="form-control" type="date" name="entrega"
+                        value="<?php echo isset($data['fecha_entrega'])?$data['fecha_entrega']:''; ?>"/>
+                    </div>
+                  </div>
+
+
                 </div>
-            
 
                 
-            
+
+
+
+                <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="estado">Estado Pedido:</label>
+                        <select class="form-control" name="estado">
+                          <option value="1">Pendiente por Cierre</option>
+                          <option value="2">Confirmado por ContraEntrega</option>
+                          <option value="4">Confirmado por Transferencia</option>
+                          <option value="5">Confirmado por Consignación</option>
+                          <option value="6">Confirmado por PSE</option>
+                        </select>
+                    </div>
+                  </div>
+
+                <div class="col-md-4">
                 <div class="form-group">
-                  <div class="form-group">
-                    <label for="description_company">Observaciones:</label>
-                    <textarea class="form-control" rows="5" name="description_company"required><?php echo isset($data['DESCRIPTION_COMPANY'])?$data['DESCRIPTION_COMPANY']:''; ?></textarea>
+                  
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea class="form-control" rows="5" name="observaciones"required>
+                    <?php echo isset($data['observaciones'])?$data['observaciones']:''; ?>
+                    </textarea>
+                
                 </div>
                 </div>
+                
             
+                
+                <div class="col-md-4">
                 <div class="form-group">
-                    <label for="product_description">Mensaje de la Tarjeta</label>
-                    <textarea class="form-control" rows="5" name="product_description"><?php echo isset($data['PRODUCT_DESCRIPTION'])?$data['PRODUCT_DESCRIPTION']:''; ?></textarea>
+                    <label for="mensaje_tarjeta">Mensaje de la Tarjeta</label>
+                    <textarea class="form-control" rows="5" name="mensaje_tarjeta">
+                    <?php echo isset($data['mensaje_tarjeta'])?$data['mensaje_tarjeta']:''; ?>
+                    </textarea>
                 </div>
-            
+                </div>
+                
+                </div>
                 <?php if(!isset($data)){?>
                 <input type="submit" name="enviar" value="Registrar Orden" class="btn btn-success btn-block"/>
                 <?php } ?>
 
                 <?php if(isset($data)){?>
-                <input type="submit" name="enviarMod" value="Modificar Empresa" class="btn btn-success btn-block"/>
+                <input type="submit" name="enviarMod" value="Modificar Orden" class="btn btn-success btn-block"/>
                 <?php } ?>
 
             </form>
 
             <?php
-            if(isset($_POST['enviar']) == "Registrar Empresa"){
+            if(isset($_POST['enviar']) == "Registrar Orden"){
               $company->validarEmpresa($_POST);
             }
 
-            if(isset($_POST['enviarMod']) == "Modificar Empresa"){
+            if(isset($_POST['enviarMod']) == "Modificar Orden"){
               $company->actualizarEmpresa($_POST);
             }
 

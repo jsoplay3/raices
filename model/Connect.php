@@ -10,7 +10,7 @@ class Conectar{
     "host"=>'localhost',
     "user"=>'root',
     "pass"=>'',
-    "db"=>'compralocal',
+    "db"=>'raptor',
   );
   private $con;
 

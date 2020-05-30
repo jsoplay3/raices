@@ -2,3 +2,8 @@
    text-align: right;
    padding: 0 2em 1em 0;
 }
+
+.alignCenter{
+   text-align: center;
+   background-color: #f00;
+}

@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require("../modelo/Conectar.php");
+	require("../model/Connect.php");
 	
 	$total=new Conectar();
 	$data = $total->autenticaUsuario($_POST['mail'],$_POST['pass']);

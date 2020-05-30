@@ -11,7 +11,7 @@
     </head>
     <body>
         <?php
-          require_once('../controller/USuarioControlador.php');
+          require_once('../controller/UsuarioControlador.php');
           require('menu/menu.php');
         ?>
         <div class="container">

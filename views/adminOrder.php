@@ -11,13 +11,14 @@
         <link rel="stylesheet" href="../utils/styles/style.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="validation/validateOrder.js"></script>
     </head>
     <body>
         <?php
           $dataFilt = "";
-          require_once('../controller/EmpresaControlador.php');
+          require_once('../controller/OrderController.php');
           require('menu/menu.php');
-          $company = new EmpresaControlador();
+          $company = new PedidoController();
         ?>
         <div class="container">
 
@@ -98,33 +99,45 @@
     </thead>
     <tbody>
       <?php
-      $emp = $company->consultarEmpresa();
+      $emp = $company->consultarPedido();
 
       if($dataFilt == ""){
           foreach ($emp as $key) {
           echo "<tr>
-          <td>12345</td>
-          <td>Pepito Perez</td>
-          <td>22/09/20</td>
-          <td>40</td>
-          <td>Bogotá</td>
-          <td><select>
-          <option>Pendiente por Cierre</option>
-          <option>Confirmado por ContraEntrega</option>
-          <option>Confirmado por Transferencia</option>
-          <option>Confirmado por Consignación</option>
-          <option>Confirmado por PSE</option>
-          </select></td>
-          <td><input type='checkbox' /></td>
-          <td><input type='checkbox' />
-            <input type='date'/>
+          <td>".$key['id_pedido']."</td>
+          <td>".$key['nombre_cliente']."</td>
+          <td>".$key['fecha_entrega_estimada']."</td>
+          <td>".$key['cantidad']."</td>
+          <td>".$key['ciudad']."</td>
+          <td>".$key['estado']."</td>
+          <td class='alignCenter'>";
+          if ($key['pago'] == 1)
+            echo "<input type='checkbox' checked />";
+          else
+            echo "<input type='checkbox' />";
+          echo "
           </td>
-          <td><input type='checkbox' /></td>
+          <td class='alignCenter'>
+          ";
+          if ($key['despacho'] == 1)
+            echo "<input type='checkbox' id='despacho' name='despacho' checked onclick='validateADespachar();'/>";
+          else
+            echo "<input type='checkbox' id='despacho' name='despacho' onclick='validateADespachar();'/>";
+          
+          echo "
+            <input type='date' id='fecha_despacho' name='fecha_despacho'/>
+          </td>
+          <td>";
+          if ($key['entrega'] == 1)
+            echo "<input type='checkbox' checked />";
+          else
+            echo "<input type='checkbox' />";
+          echo "</td>
           <td class='alignRight'>
               <form action='adminOrder.php' method='post'>
               
-              <input type='hidden' name='deleteId' value='".$key['ID']."'/>
-              <input type='submit' name='delete' value='Ver Info' class='glyphicon-trash'/>
+              <input type='hidden' name='deleteId' value=''/>
+              <input type='submit' name='delete' value='Guardar' class='glyphicon-trash' onSubmit='validateADespachar();'/>
               <input type='submit' name='delete' value='Eliminar' class='glyphicon-trash'/>
               
               <!--<button type='button' class='btn btn-default'>
@@ -160,7 +173,7 @@
           <td class='alignRight'>
               <form action='adminOrder.php' method='post'>
               
-              <input type='hidden' name='deleteId' value='".$key['ID']."'/>
+              <input type='hidden' name='deleteId' value='".$key['id_pedido']."'/>
               <input type='submit' name='delete' value='Eliminar' class='glyphicon-trash'/>
               
               <!--<button type='button' class='btn btn-default'>
