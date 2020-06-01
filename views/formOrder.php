@@ -16,9 +16,10 @@
         <?php
             require_once('../controller/OrderController.php');
             require('menu/menu.php');
-            $company = new PedidoController();
+            $order = new PedidoController();
             if(isset($_GET['id'])){
-              $data = $company->consultarPedido($_GET['id']);
+              $data = $order->consultarPedidoPorId($_GET['id']);
+              print_r($data);
             }
         ?>
         <div class="container">
@@ -37,7 +38,7 @@
                         <div class="form-group">
                             <label for="nombre_cliente">Cliente:</label>
                             <input class="form-control" type="text" name="nombre_cliente" placeholder="Nombres y Apellidos Completos del Cliente"
-                            value="<?php echo isset($data['NAME_COMPANY'])?$data['NAME_COMPANY']:''; ?>" required/>
+                            value="<?php echo isset($data['nombre_cliente'])?$data['nombre_cliente']:''; ?>" required/>
                         </div>
                     </div>
             
@@ -112,7 +113,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                         <label for="entrega_estimada">Fecha Entrega Estimada:</label>
-                        <input class="form-control" type="date" name="fecha_ entrega_estimada" placeholder="Nombre del propietario"
+                        <input class="form-control" type="date" name="fecha_entrega_estimada" placeholder="Nombre del propietario"
                         value="<?php echo isset($data['fecha_entrega_estimada'])?$data['fcha_entrega_estimada']:''; ?>" required/>
                     </div>
                   </div>
@@ -122,7 +123,7 @@
                     <div class="form-group">
                         <label for="tipo_producto">Tipo de Producto:</label>
                         <select class="form-control" name="tipo_producto">
-                          <option>Ramo de Gérbera</option>
+                          <option value='1'>Ramo de Gérbera</option>
                         </select>
                         <br/>
                     </div>
@@ -145,9 +146,9 @@
                         <label for="tipo_pago">Tipo de Pago:</label>
                         <select class="form-control" name="tipo_pago">
                           <option>Seleccione un tipo</option>
-                          <option>Contra Entrega</option>
-                          <option>Consignación</option>
-                          <option>Transferencia</option>
+                          <option value='1'>Contra Entrega</option>
+                          <option value='2'>Consignación</option>
+                          <option value='3'>Transferencia</option>
                         </select>
                     </div>
                   </div>
@@ -195,22 +196,21 @@
                     <div class="form-group">
                         <label for="fecha_despacho" class="form-check-label">Fecha Despacho:</label><br>
                         <input class="form-control" type="date" name="fecha_despacho"
-                        value="<?php echo isset($data['fecha_despacho'])?$data['fecha_despacho']:''; ?>"/>
+                        value=""/>
                     </div>
                   </div>
 
                   <div class="col-md-1">
                     <div class="form-group">
                         <label for="entrega" class="form-check-label">Entrega:</label><br>
-                        <input class="form-check-input" type="checkbox" name="entrega"
-                        value="<?php echo isset($data['entrega'])?$data['entrega']:''; ?>"/>
+                        <input class="form-check-input" type="checkbox" name="entrega" value=""/>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                         <label for="entrega" class="form-check-label">Fecha Entrega:</label><br>
-                        <input class="form-control" type="date" name="entrega"
-                        value="<?php echo isset($data['fecha_entrega'])?$data['fecha_entrega']:''; ?>"/>
+                        <input class="form-control" type="date" name="fecha_entrega"
+                        value=""/>
                     </div>
                   </div>
 
@@ -240,15 +240,12 @@
                 <div class="form-group">
                   
                     <label for="observaciones">Observaciones:</label>
-                    <textarea class="form-control" rows="5" name="observaciones"required>
-                    <?php echo isset($data['observaciones'])?$data['observaciones']:''; ?>
-                    </textarea>
+                    <textarea class="form-control" rows="5" name="observaciones"required><?php echo isset($data['observaciones'])?$data['observaciones']:''; ?></textarea>
                 
                 </div>
                 </div>
                 
-            
-                
+
                 <div class="col-md-4">
                 <div class="form-group">
                     <label for="mensaje_tarjeta">Mensaje de la Tarjeta</label>
@@ -271,12 +268,12 @@
 
             <?php
             if(isset($_POST['enviar']) == "Registrar Orden"){
-              $company->validarEmpresa($_POST);
+              $order->insertarPedido($_POST);
             }
 
-            if(isset($_POST['enviarMod']) == "Modificar Orden"){
-              $company->actualizarEmpresa($_POST);
-            }
+            // if(isset($_POST['enviarMod']) == "Modificar Orden"){
+            //   $company->actualizarEmpresa($_POST);
+            // }
 
             ?>
             </div>

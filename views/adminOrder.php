@@ -136,7 +136,7 @@
           <td class='alignRight'>
               <form action='adminOrder.php' method='post'>
               
-              <input type='hidden' name='deleteId' value=''/>
+              <input type='hidden' name='deleteId' value='".$key['id_pedido']."'/>
               <input type='submit' name='delete' value='Guardar' class='glyphicon-trash' onSubmit='validateADespachar();'/>
               <input type='submit' name='delete' value='Eliminar' class='glyphicon-trash'/>
               
@@ -153,15 +153,6 @@
           </td>
           </tr>
           ";
-        }
-
-        if(isset($_POST['delete'])  == "Eliminar"){
-          $company->inactivaEmpresa($_POST);
-        }
-
-        if(isset($_POST['modify'])  == "Modificar"){
-          $editar= $_POST['deleteId'];
-          echo "<script> window.location='formOrder.php?id=".$editar."' </script>";
         }
       }  else {
         foreach ($dataFilt as $key) {
@@ -191,14 +182,23 @@
           ";
         }
 
-        if(isset($_POST['delete'])  == "Eliminar"){
-          $company->inactivaEmpresa($_POST);
-        }
+        // if(isset($_POST['delete'])  == "Eliminar"){
+        //   $company->inactivaEmpresa($_POST);
+        // }
 
-        if(isset($_POST['modify'])  == "Modificar"){
-          $editar= $_POST['deleteId'];
-          echo "<script> window.location='formCompany.php?id=".$editar."' </script>";
-        }
+        // if(isset($_POST['modify'])  == "Modificar"){
+        //   $editar= $_POST['deleteId'];
+        //   echo "<script> window.location='formCompany.php?id=".$editar."' </script>";
+        // }
+      }
+
+      if(isset($_POST['delete'])  == "Eliminar"){
+        $company->inactivaEmpresa($_POST);
+      }
+
+      if(isset($_POST['modify'])  == "Modificar"){
+        $editar= $_POST['deleteId'];
+        echo "<script> window.location='formOrder.php?id=".$editar."' </script>";
       }
 
       ?>     
